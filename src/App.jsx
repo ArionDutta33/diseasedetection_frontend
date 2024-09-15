@@ -40,14 +40,18 @@
 
 // export default App;
 
-import Home from './pages/Home'
-
+import { Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Examples from "./pages/Examples"
 function App() {
   return (
-    <div>
-      <Home />
-    </div>
-  )
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/info" element={<Examples />} />
+
+    </Routes>
+  );
 }
 
-export default App
+export default App;
+

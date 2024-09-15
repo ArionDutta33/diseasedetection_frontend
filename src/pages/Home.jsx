@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 const Home = () => {
     const [isMenuActive, setIsMenuActive] = useState(false);
     return (
@@ -61,9 +62,9 @@ const Home = () => {
                             DISEASES
                         </div>
                         <button className="my-4 border px-6 py-2 bg-blue-500 text-white text-xl rounded-full">
-                            <a href="/info">
+                            <Link href="/info">
                                 Get Started
-                            </a>
+                            </Link>
                         </button>
                         <div className="description p-6 bg-white rounded-lg shadow-lg mx-auto max-w-4xl">
                             <h2 className="text-2xl lg:text-3xl font-extrabold text-gray-900 mb-6 border-b-2 border-blue-500 pb-2"> Our Hackathon Project: Predicting Plant Diseases from Images </h2> <div className="space-y-6"> <div className="flex flex-col md:flex-row items-start"> <strong className="text-lg font-semibold text-gray-900 flex-shrink-0 md:w-1/4">Objective:</strong>
