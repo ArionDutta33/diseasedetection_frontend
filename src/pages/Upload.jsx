@@ -1,24 +1,65 @@
 import { useState } from 'react';
+import axios from 'axios';
 
 const Upload = () => {
+    const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
     const [isFileSelected, setIsFileSelected] = useState(false);
+    const [prediction, setPrediction] = useState("");
 
     const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            setFileName(file.name);
+        const selectedFile = event.target.files[0];
+        if (selectedFile) {
+            setFile(selectedFile);
+            setFileName(selectedFile.name);
             setIsFileSelected(true);
         } else {
+            setFile(null);
             setFileName('');
             setIsFileSelected(false);
+        }
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            // Step 1: Upload image to FastAPI
+            const response = await axios.post('http://localhost:8000/predict', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            const { prediction } = response.data;
+            setPrediction(prediction);
+
+            // Step 2: Send image and prediction to Express backend
+            const expressFormData = new FormData();
+            expressFormData.append('file', file);
+            expressFormData.append('prediction', prediction);
+
+            await axios.post('http://localhost:3000/post', expressFormData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            // Optional: Handle success response or update UI
+            console.log('Result saved successfully');
+
+        } catch (error) {
+            console.error("Error uploading file or saving result:", error);
         }
     };
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="w-full max-w-md p-8 bg-white shadow-lg rounded-lg">
-                <form className="space-y-4" encType="multipart/form-data" method="POST" action="/upload">
+                <form className="space-y-4" onSubmit={handleSubmit}>
                     <div
                         id="upload-container"
                         className={`flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 ${isFileSelected ? 'bg-green-50 border-green-500' : ''}`}
@@ -40,7 +81,7 @@ const Upload = () => {
                             <input
                                 id="file-upload"
                                 type="file"
-                                name="disease"
+                                name="file"
                                 className="hidden"
                                 onChange={handleFileChange}
                             />
@@ -54,6 +95,7 @@ const Upload = () => {
                         Submit
                     </button>
                 </form>
+                {prediction && <h2 className="mt-4 text-xl font-semibold">Prediction: {prediction}</h2>}
             </div>
         </div>
     );
