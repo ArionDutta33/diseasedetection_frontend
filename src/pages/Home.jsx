@@ -46,9 +46,9 @@ const Home = () => {
                             </a>
                         </li>
                         <li>
-                            <a href="/contact" className="block py-2 text-lg hover:text-blue-400" onClick={() => setIsMenuActive(false)}>
+                            <Link href="/contact" className="block py-2 text-lg hover:text-blue-400" onClick={() => setIsMenuActive(false)}>
                                 Contact
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>
@@ -62,7 +62,7 @@ const Home = () => {
                             DISEASES
                         </div>
                         <button className="my-4 border px-6 py-2 bg-blue-500 text-white text-xl rounded-full">
-                            <Link href="/info">
+                            <Link to="/info">
                                 Get Started
                             </Link>
                         </button>

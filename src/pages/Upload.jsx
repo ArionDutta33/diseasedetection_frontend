@@ -28,7 +28,7 @@ const Upload = () => {
         formData.append('file', file);
 
         try {
-            // Step 1: Upload image to FastAPI
+            //  Upload image to FastAPI
             const response = await axios.post('http://localhost:8000/predict', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -37,7 +37,7 @@ const Upload = () => {
             const { prediction } = response.data;
             setPrediction(prediction);
 
-            // Step 2: Send image and prediction to Express backend
+            //  Send image and prediction to Express backend
             const expressFormData = new FormData();
             expressFormData.append('file', file);
             expressFormData.append('prediction', prediction);
@@ -48,7 +48,7 @@ const Upload = () => {
                 },
             });
 
-            // Optional: Handle success response or update UI
+            //  Handle success response or update UI
             console.log('Result saved successfully');
 
         } catch (error) {

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 const Examples = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -71,10 +72,12 @@ const Examples = () => {
                 <div className="text-center">
                     <h2 className="text-2xl font-bold mb-4">Analyze Your Plant</h2>
                     <p className="text-lg text-gray-700 mb-6">Upload a picture of your plant to get an instant disease diagnosis.</p>
-                    <button className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                        <FontAwesomeIcon icon={faUpload} className="mr-2" />
-                        Upload a Picture
-                    </button>
+                    <Link to={"/upload"}>
+                        <button className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            <FontAwesomeIcon icon={faUpload} className="mr-2" />
+                            Upload a Picture
+                        </button>
+                    </Link>
                 </div>
             </main>
 
